@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
-const dbName = "demo";
+const url = "mongodb+srv://VictorAzizJ:Bahiyah1@cluster0.ed64pxn.mongodb.net/savage-project?retryWrites=true&w=majority";
+const dbName = "savage-project";
 
 app.listen(3000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
@@ -39,10 +39,15 @@ app.post('/messages', (req, res) => {
 })
 
 app.put('/messages', (req, res) => {
+  
   db.collection('messages')
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
+    
+    $inc: { 
+      thumbUp:  req.body.thumbUp ? 1 : 0 , 
+      thumbDown: req.body.thumbUp ? 0 : 1
+
+
     }
   }, {
     sort: {_id: -1},
